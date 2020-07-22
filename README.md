@@ -16,9 +16,9 @@ A new wallpaper every day
 
 The script mostly uses small terminal applications; however, some / all of the below may not be available on your system and need to be installed separately:
 
-  * To process JSON: [jq](https://stedolan.github.io/jq/)
-  * To download files: [curl](https://curl.haxx.se/)
-  * To determine image dimensions: [identify (part of ImageMagick)](https://imagemagick.org/)
+*   To process JSON: [jq](https://stedolan.github.io/jq/)
+*   To download files: [curl](https://curl.haxx.se/)
+*   To determine image dimensions: [identify (part of ImageMagick)](https://imagemagick.org/)
 
 ## Usage
 
