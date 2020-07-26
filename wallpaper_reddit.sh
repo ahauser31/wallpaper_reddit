@@ -30,7 +30,7 @@ RECENT="$FOLDER/wallpaper.txt"
 
 # Reddit configuration; sorting, subreddit to search and number of links to process
 # possible values: hot, top or new
-SORTBY="hot"
+SORTBY="top"
 # Some possibilities: earthporn, spaceporn, wallpaper
 SUBREDDIT="wallpaper"
 MAXLINKS="100"
@@ -218,8 +218,7 @@ fi
 
 # Go through list of picture candidates to find a suitable one and download first suitable picture
 echo "$LINKS" | while read -r LINE; do
-		# shellcheck disable=SC1012
-		LINK="$(echo "$LINE" | awk -F\t '{print $2}')"
+		LINK="$(echo "$LINE" | awk -F"\t" '{print $2}')"
 		FILENAME="$FOLDER/$(get_filename "$LINK")"
 
 		# Check if file was already downloaded
@@ -240,7 +239,7 @@ echo "$LINKS" | while read -r LINE; do
 		# Easiest method is looking at the title, which often contains the image size
 		# If not in the title, use ImageMagick identify to get the dimensions
 		# shellcheck disable=SC1012
-		TITLE="$(echo "$LINE" | awk -F\t '{print $1}')"
+		TITLE="$(echo "$LINE" | awk -F"\t" '{print $1}')"
 		DIM="$(extract_dimensions "$TITLE")"
 
 		if [ -z "$DIM" ]; then
