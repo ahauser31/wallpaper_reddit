@@ -48,6 +48,9 @@ SHUFFLE="true"
 FORCE="false"
 VERBOSE="false"
 
+# Just echo out last downloaded wallpaper without checking the date; usefull for automation
+CURRENT="false"
+
 # Helper functions
 
 # Try to extract the image dimensions from a string if present in the format \[numberxnumber\]
@@ -105,7 +108,7 @@ analyze_image()
 
 usage()
 {
-		echo "Usage: $0 [-f|-n|-v] [ -p OUTPUT PATH ] [ -s SORTBY ] [ -r SUBREDDIT ] [ -m MAXLINKS ] [ -e MINHEIGHT ] [ -w MINWIDTH ] [ -i MINRATIO ] [ -a MAXRATIO ]"
+		echo "Usage: $0 [-f|-n|-v|-c] [ -p OUTPUT PATH ] [ -s SORTBY ] [ -r SUBREDDIT ] [ -m MAXLINKS ] [ -e MINHEIGHT ] [ -w MINWIDTH ] [ -i MINRATIO ] [ -a MAXRATIO ]"
   	exit 2
 }
 
@@ -120,12 +123,13 @@ get_ratio()
 
 # Check command line arguments
 # Force, no shuffle, Path, Sort, subReddit, Maxlinks, hEight, Width, mInratio, mAxratio, Help
-while getopts 'fnvp:s:r:m:e:w:i:a:h?' ARG
+while getopts 'fnvcp:s:r:m:e:w:i:a:h?' ARG
 do
 		case $ARG in
 			f) FORCE="true" ;;
 			n) SHUFFLE="false" ;;
 			v) VERBOSE="true" ;;
+			c) CURRENT="true" ;;
 			p) FOLDER="$OPTARG" ;;
 			s) SORTBY="$OPTARG" ;;
 			r) SUBREDDIT="$OPTARG" ;;
@@ -162,6 +166,16 @@ if [ "$FORCE" = "false" ] && [ -e "$RECENT" ]; then
 				# Just retun filename and exit
 				if [ "$VERBOSE" = "true" ]; then
 						echo "Already downloaded picture today, current picture is: \"$RECENTFILE\""
+				else
+						echo "$RECENTFILE"
+				fi
+				exit 0
+		fi
+
+		# Also return recent file if "current" option was specified
+		if [ "$CURRENT" = "true" ]; then
+				if [ "$VERBOSE" = "true" ]; then
+						echo "Last downloaded picture: \"$RECENTFILE\""
 				else
 						echo "$RECENTFILE"
 				fi
